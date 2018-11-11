@@ -20,8 +20,9 @@ public class FileBlockChain implements BlockChain<Metadata> {
     @Override
     public String addFile(File file) {
         Metadata metadata = metadataFactory.buildMetadata(file);
+        String hash = metadata.getHash();
         metaFiles.put(metadata.getHash(), metadata);
-        return metadata.getHash();
+        return hash;
     }
 
     @Override
