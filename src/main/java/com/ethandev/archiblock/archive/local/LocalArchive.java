@@ -1,8 +1,8 @@
 package com.ethandev.archiblock.archive.local;
 
 import com.ethandev.archiblock.archive.Archive;
-import com.ethandev.archiblock.archive.FileMetadata;
 import com.ethandev.archiblock.archive.Tag;
+import com.ethandev.archiblock.archive.metadata.Metadata;
 import org.joda.time.DateTime;
 
 import java.io.File;
@@ -12,14 +12,14 @@ import java.util.List;
 
 public class LocalArchive implements Archive {
 
-    ArrayList<FileMetadata> archiveMetadata;
+    ArrayList<Metadata> archiveMetadata;
 
     public LocalArchive(Path rootDirectory) {
         //load file metadata
     }
 
     @Override
-    public List<FileMetadata> getFiles() {
+    public List<Metadata> getFiles() {
         throw new UnsupportedOperationException();
     }
 

@@ -1,31 +1,28 @@
 package com.ethandev.archiblock;
 
-import com.ethandev.archiblock.archive.FileMetadata;
+import com.ethandev.archiblock.archive.metadata.FileMetadataFactory;
+import com.ethandev.archiblock.archive.metadata.Metadata;
 import com.ethandev.archiblock.blockchain.BlockChain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URL;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
+    private static final File fileTest = new File(MainTest.class.getClassLoader().getResource("files/test.json").getFile());
+
     @Test
     void createBlockChain() {
-        BlockChain<FileMetadata> fmBlock = new FileBlockChain();
+        BlockChain<Metadata> fmBlock = new FileBlockChain(new FileMetadataFactory());
     }
 
     @Test
     void addFileAndGetInBlockChain() {
-        File origin = new File(this.getClass().getClassLoader().getResource("file/test.json").getFile());
-
-        BlockChain<FileMetadata> fmBlock = new FileBlockChain();
-        String hash = fmBlock.addFile(origin);
+        BlockChain<Metadata> fmBlock = new FileBlockChain(new FileMetadataFactory());
+        String hash = fmBlock.addFile(fileTest);
 
         File resp = fmBlock.getFile(hash);
-        Assertions.assertEquals(origin,resp);
+        Assertions.assertEquals(fileTest, resp);
         //TODO correct this
     }
 }
