@@ -11,6 +11,6 @@ class FileMetadataFactoryTest {
     @Test
     void testBuildMetadata() {
         FileMetadataFactory factory = new FileMetadataFactory();
-        Metadata metadata = factory.buildMetadata(testFile);
+        Metadata metadata = factory.buildMetadata(testFile, null);
     }
 }

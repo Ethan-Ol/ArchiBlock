@@ -3,5 +3,5 @@ package com.ethandev.archiblock.archive.metadata;
 import java.io.File;
 
 public interface MetadataFactory {
-    Metadata buildMetadata(File file);
+    Metadata buildMetadata(File file, String previousHash);
 }

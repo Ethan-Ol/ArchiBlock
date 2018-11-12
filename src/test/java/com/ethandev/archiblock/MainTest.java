@@ -18,11 +18,11 @@ class MainTest {
     }
 
     @Test
-    void addFileAndGetInBlockChain() {
+    void addFileAndGetInBlockChain() throws AlreadyExistFileException {
         BlockChain<Metadata> fmBlock = new FileBlockChain(new FileMetadataFactory());
-        String hash = fmBlock.addFile(fileTest);
+        Metadata metadata = fmBlock.addFile(fileTest);
 
-        File resp = fmBlock.getFile(hash);
+        File resp = fmBlock.getFile(metadata.getHash());
         Assertions.assertEquals(fileTest, resp);
     }
 
@@ -35,16 +35,24 @@ class MainTest {
             fmBlock.addFile(fileTest);
             Assertions.fail("Impossible to add the same file second time.");
         } catch (Exception e) {
-
         }
     }
 
     @Test
-    void testHashDiffBetweenFile() {
+    void testHashDiffBetweenFile() throws AlreadyExistFileException {
         BlockChain<Metadata> fmBlock = new FileBlockChain(new FileMetadataFactory());
-        String hash = fmBlock.addFile(fileTest);
-        String hash2 = fmBlock.addFile(fileTest2);
-
+        String hash = fmBlock.addFile(fileTest).getHash();
+        String hash2 = fmBlock.addFile(fileTest2).getHash();
         Assertions.assertNotEquals(hash, hash2);
     }
+
+    @Test
+    void testAddAndChain() throws AlreadyExistFileException {
+        BlockChain<Metadata> fmBlock = new FileBlockChain(new FileMetadataFactory());
+        Metadata metadata = fmBlock.addFile(fileTest);
+        Metadata metadata2 = fmBlock.addFile(fileTest2);
+        Assertions.assertEquals(metadata.getHash(),metadata2.getPreviousHash());
+    }
+
+    //TODO test de robustesse du hash en changeant des valeurs des metadata
 }
