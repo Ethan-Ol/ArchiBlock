@@ -3,7 +3,9 @@ package com.ethandev.archiblock;
 import com.ethandev.archiblock.archive.metadata.FileMetadataFactory;
 import com.ethandev.archiblock.archive.metadata.Metadata;
 import com.ethandev.archiblock.blockchain.BlockChain;
+import com.ethandev.archiblock.file.BlockChainReader;
 import com.ethandev.archiblock.file.BlockChainSaver;
+import com.ethandev.archiblock.file.LocalFileBlockChainReader;
 import com.ethandev.archiblock.file.LocalFileBlockChainSaver;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -63,7 +65,7 @@ class MainTest {
         BlockChain<Metadata> fmBlock = new FileBlockChain(new FileMetadataFactory());
         Metadata metadata = fmBlock.addFile(fileTest);
         Metadata metadata2 = fmBlock.addFile(fileTest2);
-        Assertions.assertEquals(metadata.getHash(),metadata2.getPreviousHash());
+        Assertions.assertEquals(metadata.getHash(), metadata2.getPreviousHash());
     }
 
     @Test
@@ -85,7 +87,12 @@ class MainTest {
         saver.saveBlockChain(fmBlock);
 
         //TODO read file metadata
-        
+
+        BlockChainReader reader = new LocalFileBlockChainReader(tempFile, factory);
+        BlockChain<Metadata> readBlockChain = reader.read();
+
+        Assertions.assertEquals(fmBlock, readBlockChain);
+
         tempFile.delete();
     }
 

@@ -7,6 +7,7 @@ import com.ethandev.archiblock.blockchain.BlockChain;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class FileBlockChain implements BlockChain<Metadata> {
 
@@ -48,5 +49,20 @@ public class FileBlockChain implements BlockChain<Metadata> {
     @Override
     public Collection<Metadata> getAllData() {
         return metaFiles.values();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FileBlockChain that = (FileBlockChain)o;
+        return Objects.equals(metaFiles, that.metaFiles) &&
+            Objects.equals(lastHash, that.lastHash);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(metaFiles, lastHash);
     }
 }
