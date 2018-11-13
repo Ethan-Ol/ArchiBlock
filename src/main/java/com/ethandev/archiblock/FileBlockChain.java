@@ -5,6 +5,7 @@ import com.ethandev.archiblock.archive.metadata.MetadataFactory;
 import com.ethandev.archiblock.blockchain.BlockChain;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class FileBlockChain implements BlockChain<Metadata> {
@@ -42,5 +43,10 @@ public class FileBlockChain implements BlockChain<Metadata> {
     public File getFile(String hash) {
         Metadata metadata = metaFiles.get(hash);
         return new File(metadata.uri);
+    }
+
+    @Override
+    public Collection<Metadata> getAllData() {
+        return metaFiles.values();
     }
 }
